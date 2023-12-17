@@ -3,13 +3,15 @@
 
 namespace dlinka
 {
+    const long long base = 1000000000; // Internal numeric system base. Better to use high bases to better use long long digits.
+
+//TODO Copyable / movable
+
     class verylong
     {
     public:
-
         verylong()
         {
-            
         }
 
         verylong(long long val)
@@ -132,7 +134,6 @@ namespace dlinka
         }
 
     private:
-        const long long base = 1000000000;
         std::vector<long long> value;
 
         // Supplementary calculation functions
