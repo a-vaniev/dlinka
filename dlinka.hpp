@@ -3,9 +3,9 @@
 
 namespace dlinka
 {
-    const long long base = 1000000000; // Internal numeric system base. Better to use high bases to better use long long digits.
+    const long long base = 10; // Internal numeric system base. Better to use high bases to better use long long digits.
 
-//TODO Copyable / movable
+    // TODO Copyable / movable
 
     class verylong
     {
@@ -86,6 +86,54 @@ namespace dlinka
             return result;
         }
 
+        bool operator>(verylong const &other)
+        {
+            if (value.size() > other.value.size())
+                return true;
+            if (value.size() < other.value.size())
+                return false;
+            for (long long i = other.value.size() - 1; i >= 0; i--)
+            {
+                if (value[i] > other.value[i])
+                    return true;
+                if (value[i] < other.value[i])
+                    return false;
+            }
+            return false;
+        }
+
+        bool operator<(verylong const &other)
+        {
+            if (value.size() < other.value.size())
+                return true;
+            if (value.size() > other.value.size())
+                return false;
+            for (long long i = other.value.size() - 1; i >= 0; i--)
+            {
+                if (value[i] < other.value[i])
+                    return true;
+                if (value[i] > other.value[i])
+                    return false;
+            }
+            return false;
+        }
+
+        bool operator==(verylong const &other)
+        {
+            if (this == &other)
+                return true;
+            if (value.size() != other.value.size())
+                return false;
+            auto ita = this->value.begin();
+            auto itb = other.value.begin();
+            for (; (ita < this->value.end()) && (itb < other.value.end()); ita++, itb++)
+            {
+                if (*ita != *itb)
+                    return false;
+            }
+            return true;
+        }
+
         verylong operator-(verylong const &other)
         {
             auto max_digit = base - 1;
@@ -112,24 +160,23 @@ namespace dlinka
 
         verylong operator/(verylong const &other)
         {
+            // Dumb subraction
             verylong result;
             verylong one(1);
             long long cnt = 0;
-            verylong temp = *this;
-            while (true)
+            verylong temp(*this);
+            while (temp > other)
             {
                 try
                 {
                     temp = temp - other;
                     result = result + one;
-                    // cnt++;
                 }
                 catch (...)
                 {
                     break;
                 }
             }
-            // result.setLL(cnt);
             return result;
         }
 
