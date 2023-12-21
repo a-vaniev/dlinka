@@ -2,12 +2,15 @@
 #include <vector>
 
 #include "dlinka.hpp"
-/*
+
+// Supplementary
+using namespace dlinka;
+
 verylong fac(verylong i)
 {
-    verylong one;
-    one.setLL(1);
-    return (i.isZero() ? one : (i * fac(i - one)));
+    verylong one(1);
+    verylong zero(0);
+    return ((i == zero) ? one : (i * fac(i - one)));
 }
 
 verylong nCk(verylong n, verylong k)
@@ -21,9 +24,8 @@ long long nCk(long long n, long long k)
     verylong kvl(k);
 
     auto result = nCk(nvl, kvl);
-    return result.getLL();
+    return result.asLongLong();
 }
-*/
 
 using namespace dlinka;
 
@@ -57,4 +59,7 @@ int main()
     
     auto division = avl/dvl;
     std::cout<<"Division:"<<division.asLongLong()<<"\n";
+
+    std::cout << "Combinations:" << nCk(59,50)<<"\n";
+    
    }

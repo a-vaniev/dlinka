@@ -83,6 +83,7 @@ namespace dlinka
                 result.value.push_back(digit);
                 i++;
             }
+            result.cutTail();
             return result;
         }
 
@@ -143,7 +144,7 @@ namespace dlinka
             {
                 result = (result.subtractDigit(other.value[i], i));
             }
-
+result.cutTail();
             return result;
         }
 
@@ -177,12 +178,26 @@ namespace dlinka
                     break;
                 }
             }
+            result.cutTail();
             return result;
         }
 
     private:
         std::vector<long long> value;
 
+        //Cut leading zeros
+        void cutTail()
+        {
+        auto it = this->value.rbegin();
+        for (;it<this->value.rend();it++)
+        {
+        if(*it!=0)break;
+        }
+        if(it!=value.rbegin())
+        {
+            value.erase(it.base(),value.rbegin().base());
+        }
+    }
         // Supplementary calculation functions
         verylong shift(long long pos)
         {
